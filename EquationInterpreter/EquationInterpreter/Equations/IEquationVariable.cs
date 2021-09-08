@@ -12,5 +12,9 @@ namespace EquationInterpreter.Equations
         bool HasValue { get; }
         int Index { get; }
         T Value { get; }
+
+        bool IsReadOnly { get; }
+        void SetValue(T value);
+        void ClearValue();
     }
 }

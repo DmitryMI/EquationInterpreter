@@ -14,6 +14,8 @@ namespace EquationInterpreter.Arithmetics
         public int Index { get; }
         public double Value { get; private set; }
 
+        public bool IsReadOnly => false;
+
         public ArithmeticVariable(string name, int index)
         {
             Name = name;

@@ -17,6 +17,8 @@ namespace EquationInterpreter.Calculator
 
         public double Value { get; private set; }
 
+        public bool IsReadOnly => false;
+
         public ParsedVariable(string name, int index)
         {
             Name = name;
