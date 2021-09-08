@@ -93,7 +93,7 @@ namespace EquationInterpreter.Arithmetics
         {
             if(operands.Length != ArgumentsNumber)
             {
-                throw new ArgumentException($"Not enough arguments to operation {operation}");
+                throw new ArgumentException($"Not enough arguments for operation {operation}");
             }
             object[] operandsObj = new object[ArgumentsNumber];
             Array.Copy(operands, operandsObj, operands.Length);
