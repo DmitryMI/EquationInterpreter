@@ -15,8 +15,8 @@ namespace EquationInterpreter.Calculator.Tests
         [TestMethod()]
         public void ParseReversePolishNotationTest()
         {
-            double correct = 245.73;
-            string equationString = "12,5 y + x * y +";
+            double correct = 0.633;
+            string equationString = "12,5 y + x * y + Sin 100 Min2";
             double x = 4.95;
             double y = 30.9;
 

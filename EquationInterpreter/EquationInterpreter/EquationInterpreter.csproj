@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Arithmetics\ArithmeticOperation.cs" />
+    <Compile Include="Arithmetics\MathMethodWrapper.cs" />
     <Compile Include="Arithmetics\SimpleVariable.cs" />
     <Compile Include="Calculator\MathEquationParser.cs" />
     <Compile Include="Calculator\ParsedVariable.cs" />

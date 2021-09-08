@@ -70,6 +70,10 @@ namespace EquationInterpreter.Calculator
                             {
                                 equation.Push(new ArithmeticOperation(identifier));
                             }
+                            else if(MathMethodWrapper.IsValid(identifier))
+                            {
+                                equation.Push(new MathMethodWrapper(identifier));
+                            }
                             else
                             {
                                 bool hasKey = variablesOut.TryGetValue(identifier, out ParsedVariable variable);
@@ -97,8 +101,8 @@ namespace EquationInterpreter.Calculator
                             sequence.Append(rvpEquation[i]);
                             break;
                         case SequenceType.Identifier:
-                            throw new ArgumentException($"Digit follows a letter on {i} ({IdentifyCharacter(rvpEquation, i)}). Separate variables, constants and operations with white space.");
-                            //sequence.Append(rvpEquation[i]);                            
+                            //throw new ArgumentException($"Digit follows a letter on {i} ({IdentifyCharacter(rvpEquation, i)}). Separate variables, constants and operations with white space.");
+                            sequence.Append(rvpEquation[i]);                            
                             break;
                     }                    
                 }
@@ -147,15 +151,15 @@ namespace EquationInterpreter.Calculator
             {
                 case SequenceType.None:
                     break;
-                case SequenceType.Literal:
-                    double literal = double.Parse(sequence.ToString());
-                    equation.Push(literal);
-                    break;
                 case SequenceType.Identifier:
                     string identifier = sequence.ToString();
                     if (ArithmeticOperation.IsValid(identifier))
                     {
                         equation.Push(new ArithmeticOperation(identifier));
+                    }
+                    else if (MathMethodWrapper.IsValid(identifier))
+                    {
+                        equation.Push(new MathMethodWrapper(identifier));
                     }
                     else
                     {
