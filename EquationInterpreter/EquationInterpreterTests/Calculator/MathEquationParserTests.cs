@@ -34,8 +34,8 @@ namespace EquationInterpreter.Calculator.Tests
         [TestMethod()]
         public void ParseTest()
         {
-            double expected = -9.256;
-            string equationString = "(5 + 6) * ((-1 + 2) * Sin(Min2(2 - 3, 10)))";
+            double expected = (5 + 6) * ((-1 + 2) * Math.Sin(Math.Min(2 - 3, 10)));
+            string equationString = "(5 + 6) * ((-1 + 2) * Sin(Min2(2 - 3, 10)))";            
             Dictionary<string, ParsedVariable> variables = new Dictionary<string, ParsedVariable>();
             Equation<double> equation = MathEquationParser.Parse(equationString, variables);
             Debug.WriteLine(equation);

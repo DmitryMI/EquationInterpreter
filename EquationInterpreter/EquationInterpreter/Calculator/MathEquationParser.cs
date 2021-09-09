@@ -298,6 +298,7 @@ namespace EquationInterpreter.Calculator
             }
 
             infixEquationElements[functionIndex + 1] = null;
+            elementsLeft--;
 
             List<InfixEquationElement> arguments = new List<InfixEquationElement>();
             bool pendingComma = false;
@@ -388,6 +389,7 @@ namespace EquationInterpreter.Calculator
         {
             InfixEquationElement bracket = infixEquationElements[bracketIndex];
             infixEquationElements[bracketIndex] = null;
+            elementsLeft--;
             InfixEquationElementType expectedType;
             int direction = 0;
             if(bracket.ElementType == InfixEquationElementType.OpeningBracket)
