@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EquationInterpreter.Equations;
+using System.Diagnostics;
 
 namespace EquationInterpreter.Calculator.Tests
 {
@@ -28,6 +29,19 @@ namespace EquationInterpreter.Calculator.Tests
 
             double result = equation.Calculate();
             Assert.IsTrue(Math.Abs(correct - result) < 0.01f, $"Value is {result}, but expected {correct}");
+        }
+
+        [TestMethod()]
+        public void ParseTest()
+        {
+            double expected = -9.256;
+            string equationString = "(5 + 6) * ((-1 + 2) * Sin(Min2(2 - 3, 10)))";
+            Dictionary<string, ParsedVariable> variables = new Dictionary<string, ParsedVariable>();
+            Equation<double> equation = MathEquationParser.Parse(equationString, variables);
+            Debug.WriteLine(equation);
+            double result = equation.Calculate();
+            double delta = Math.Abs(expected - result);
+            Assert.IsTrue(delta < 0.01f, $"Expected resul is {expected}, but actual result is {result}");
         }
     }
 }

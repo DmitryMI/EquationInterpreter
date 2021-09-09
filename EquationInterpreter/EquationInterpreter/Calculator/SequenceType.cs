@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EquationInterpreter.Equations
+namespace EquationInterpreter.Calculator
 {
-    public enum EquationElementType
+    enum SequenceType
     {
-        Operation,
+        None,
         Literal,
-        Variable
+        Identifier,
+        LiteralOrIdentifier
     }
 }

@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace EquationInterpreter.Equations
 {
-    public interface IEquationOperation<T> : IEquationPushable<T>
+    public interface IEquationPushable<T>
     {
-        int ArgumentsNumber { get; }
-        T Calculate(params T[] operands);
     }
 }

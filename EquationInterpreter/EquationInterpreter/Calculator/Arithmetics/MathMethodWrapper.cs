@@ -8,37 +8,37 @@ using System.Threading.Tasks;
 
 
 
-namespace EquationInterpreter.Arithmetics
+namespace EquationInterpreter.Calculator.Arithmetics
 {
-    public class MathMethodWrapper : IEquationOperation<double>
+    public class MathMethodWrapper : IPriorityOperation<double>
     {
         private static List<MethodInfo> GetMathMethods(string name)
         {
             Type mathType = typeof(Math);
             MethodInfo[] allMethods = mathType.GetMethods(BindingFlags.Public | BindingFlags.Static);
             List<MethodInfo> selectedMethods = new List<MethodInfo>();
-            foreach(MethodInfo methodInfo in allMethods)
+            foreach (MethodInfo methodInfo in allMethods)
             {
-                if(methodInfo.ReturnType != typeof(double))
+                if (methodInfo.ReturnType != typeof(double))
                 {
                     continue;
                 }
                 ParameterInfo[] parameters = methodInfo.GetParameters();
 
                 bool goodParams = true;
-                foreach(ParameterInfo parameterInfo in parameters)
+                foreach (ParameterInfo parameterInfo in parameters)
                 {
-                    if(parameterInfo.ParameterType != typeof(double))
+                    if (parameterInfo.ParameterType != typeof(double))
                     {
                         goodParams = false;
                         break;
                     }
                 }
-                if(!goodParams)
+                if (!goodParams)
                 {
                     continue;
                 }
-                if(methodInfo.Name != name)
+                if (methodInfo.Name != name)
                 {
                     continue;
                 }
@@ -55,7 +55,7 @@ namespace EquationInterpreter.Arithmetics
                 return methods[0];
             }
 
-            if (Char.IsDigit(strOperation[strOperation.Length - 1]))
+            if (char.IsDigit(strOperation[strOperation.Length - 1]))
             {
                 int parametersNumber = int.Parse(strOperation[strOperation.Length - 1].ToString());
                 string methodName = strOperation.Remove(strOperation.Length - 1);
@@ -78,11 +78,13 @@ namespace EquationInterpreter.Arithmetics
         private string operation;
         public int ArgumentsNumber => argumentsNumber;
 
+        public int Priority => 2;
+
         public MathMethodWrapper(string operation)
         {
             this.operation = operation;
             method = GetSpecificMethod(operation);
-            if(method == null)
+            if (method == null)
             {
                 throw new ArgumentException($"Operation {operation} is not implemented in Math or parameters number does not match");
             }
@@ -91,7 +93,7 @@ namespace EquationInterpreter.Arithmetics
 
         public double Calculate(params double[] operands)
         {
-            if(operands.Length != ArgumentsNumber)
+            if (operands.Length != ArgumentsNumber)
             {
                 throw new ArgumentException($"Not enough arguments for operation {operation}");
             }
@@ -99,6 +101,11 @@ namespace EquationInterpreter.Arithmetics
             Array.Copy(operands, operandsObj, operands.Length);
             object result = method.Invoke(null, operandsObj);
             return (double)result;
+        }
+
+        public override string ToString()
+        {
+            return operation;
         }
     }
 }

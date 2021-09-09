@@ -41,15 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arithmetics\ArithmeticOperation.cs" />
-    <Compile Include="Arithmetics\MathMethodWrapper.cs" />
-    <Compile Include="Arithmetics\SimpleVariable.cs" />
+    <Compile Include="Calculator\Arithmetics\ArithmeticOperation.cs" />
+    <Compile Include="Calculator\Arithmetics\MathMethodWrapper.cs" />
+    <Compile Include="Calculator\InfixEquationContainer.cs" />
+    <Compile Include="Calculator\IPriorityOperation.cs" />
     <Compile Include="Calculator\MathEquationParser.cs" />
     <Compile Include="Calculator\ParsedVariable.cs" />
+    <Compile Include="Calculator\SequenceType.cs" />
     <Compile Include="Equations\Equation.cs" />
     <Compile Include="Equations\EquationElement.cs" />
     <Compile Include="Equations\EquationElementType.cs" />
     <Compile Include="Equations\IEquationOperation.cs" />
+    <Compile Include="Equations\IEquationPushable.cs" />
     <Compile Include="Equations\IEquationVariable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

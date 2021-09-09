@@ -7,16 +7,27 @@ using System.Threading.Tasks;
 
 using OperatorFunc = System.Func<double, double, double>;
 
-namespace EquationInterpreter.Arithmetics
+namespace EquationInterpreter.Calculator.Arithmetics
 {
-    public class ArithmeticOperation : IEquationOperation<double>
+    public class ArithmeticOperation : IPriorityOperation<double>
     {
-        private static Dictionary<string, OperatorFunc> operations = new Dictionary<string, OperatorFunc>()
+        private struct OperationDescriptor
         {
-            {"+", Sum },
-            {"-", Sub },
-            {"*", Mul },
-            {"/", Div },
+            public OperatorFunc Function { get; set; }
+            public int Priority { get; set; }
+            public OperationDescriptor(OperatorFunc func, int priority)
+            {
+                Function = func;
+                Priority = priority;
+            }
+        }
+
+        private static Dictionary<string, OperationDescriptor> operations = new Dictionary<string, OperationDescriptor>()
+        {
+            {"+", new OperationDescriptor(Sum, 0) },
+            {"-", new OperationDescriptor(Sub, 0) },
+            {"*", new OperationDescriptor(Mul, 1) },
+            {"/", new OperationDescriptor(Div, 1) },
         };
 
         public static bool IsValid(string operation)
@@ -27,7 +38,9 @@ namespace EquationInterpreter.Arithmetics
         public int ArgumentsNumber => 2;
         public string Operator { get; set; }
 
-        private OperatorFunc operatorFunc;
+        public int Priority => operationDescriptor.Priority;
+
+        private OperationDescriptor operationDescriptor;
 
         public ArithmeticOperation(string strOperator)
         {
@@ -36,7 +49,7 @@ namespace EquationInterpreter.Arithmetics
                 throw new ArgumentException($"{strOperator} operator not recognized");
             }
             Operator = strOperator;
-            operatorFunc = operations[strOperator];            
+            operationDescriptor = operations[strOperator];
         }
 
         private static double Sum(double a, double b)
@@ -61,11 +74,16 @@ namespace EquationInterpreter.Arithmetics
 
         public double Calculate(params double[] operands)
         {
-            if(operands.Length != 2)
+            if (operands.Length != 2)
             {
                 throw new ArgumentException($"Not enough arguments to operation <{Operator}>");
             }
-            return operatorFunc(operands[0], operands[1]);
+            return operationDescriptor.Function(operands[0], operands[1]);
+        }
+
+        public override string ToString()
+        {
+            return Operator;
         }
     }
 }

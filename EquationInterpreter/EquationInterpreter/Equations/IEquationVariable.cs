@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EquationInterpreter.Equations
 {
-    public interface IEquationVariable<T>
+    public interface IEquationVariable<T> : IEquationPushable<T>
     {
         string Name { get; }
         bool HasValue { get; }

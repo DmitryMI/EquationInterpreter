@@ -40,6 +40,16 @@ namespace EquationInterpreter.Equations
             return result;
         }
 
+        public override string ToString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach(var element in equationList)
+            {
+                stringBuilder.Append(element.ToString()).Append(' ');
+            }
+            return stringBuilder.ToString();
+        }
+
         private void ProcessOperation(Stack<EquationElement<T>> stack, IEquationOperation<T> operation, T[] operands)
         {
             T[] values = new T[operation.ArgumentsNumber];
@@ -72,7 +82,7 @@ namespace EquationInterpreter.Equations
                 {
                     throw new InvalidOperationException($"Stack is currupted");
                 }
-                values[i] = value;
+                values[operation.ArgumentsNumber - i - 1] = value;
             }
 
             T result = operation.Calculate(values);
@@ -94,6 +104,22 @@ namespace EquationInterpreter.Equations
         public Equation()
         {
             variableSet = new List<IEquationVariable<T>>();
+        }
+
+        public void Push(IEquationPushable<T> pushable)
+        {
+            if(pushable is IEquationVariable<T> variable)
+            {
+                Push(variable);
+            }
+            else if(pushable is IEquationOperation<T> operation)
+            {
+                Push(operation);
+            }
+            else
+            {
+                throw new ArgumentException($"Pushable {pushable} is neither a variable nor an operation");
+            }
         }
 
         public void Push(T literal)
