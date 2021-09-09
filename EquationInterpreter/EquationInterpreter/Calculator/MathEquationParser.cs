@@ -168,7 +168,6 @@ namespace EquationInterpreter.Calculator
                 if (element == null)
                 {
                     builder.Append(". ");
-                    builder.Append(' ', 2);
                     continue;
                 }
 
@@ -617,7 +616,7 @@ namespace EquationInterpreter.Calculator
             Equation<double> equation = new Equation<double>(variablesArray);
             int elementsLeft = infixEquationElements.Count;
 
-            Debug.Write($"({elementsLeft}): ");
+            Debug.Write($"({elementsLeft:000}): ");
             Debug.WriteLine(PrintInfixEquation(infixEquationElements));
             while(elementsLeft > 0)
             {
@@ -629,7 +628,7 @@ namespace EquationInterpreter.Calculator
                 InfixEquationElement maxPriorityElement= infixEquationElements[maxPriorityIndex];
                 IPriorityOperation<double> operation = maxPriorityElement.Operation;
                 InfixEquationElement[] arguments = GrabOperationAndArguments(infixEquationElements, equationString, maxPriorityIndex, ref elementsLeft);
-                Debug.Write($"({elementsLeft}): ");
+                Debug.Write($"({elementsLeft:000}): ");
                 Debug.WriteLine(PrintInfixEquation(infixEquationElements));
                 for (int i = 0; i < arguments.Length; i++)
                 {
